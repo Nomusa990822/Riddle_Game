@@ -1,6 +1,7 @@
 import random
 import time
-from colorama import Fore, Style, init
+import os
+from colorama import init, Fore, Style
 
 init(autoreset=True)
 
@@ -8,155 +9,110 @@ RIDDLE_FILE = "riddles.txt"
 LEADERBOARD_FILE = "leaderboard.txt"
 HISTORY_FILE = "history.txt"
 
-
-def main():
-    show_banner()
-    loading_animation()
-
-    name = input("Enter your name: ").strip()
-
-    while True:
-        difficulty = choose_difficulty()
-
-        riddles = load_riddles(difficulty)
-
-        if len(riddles) < 5:
-            print("Not enough riddles for this difficulty.")
-            return
-
-        questions = random.sample(riddles, 5)
-
-        score = play_game(questions)
-
-        print(Fore.YELLOW + f"\n🏆 Final Score: {score}/5")
-
-        update_leaderboard(name, score)
-
-        save_history(name, difficulty, score)
-
-        show_leaderboard()
-
-        if not play_again():
-            print(Fore.CYAN + "\nThanks for playing!")
-            break
-
-
-def show_banner():
-    print(Fore.CYAN + """
-██████╗ ██╗██████╗ ██████╗ ██╗     ███████╗
-██╔══██╗██║██╔══██╗██╔══██╗██║     ██╔════╝
-██████╔╝██║██║  ██║██║  ██║██║     █████╗
-██╔══██╗██║██║  ██║██║  ██║██║     ██╔══╝
-██║  ██║██║██████╔╝██████╔╝███████╗███████╗
-╚═╝  ╚═╝╚═╝╚═════╝ ╚═════╝ ╚══════╝╚══════╝
-
-        RIDDLE QUIZ GAME
-""")
-
-
-def loading_animation():
-    print("Loading game", end="")
-    for _ in range(3):
-        time.sleep(0.5)
-        print(".", end="", flush=True)
-    print("\n")
-
-
-def choose_difficulty():
-    while True:
-        level = input("Choose difficulty (easy / medium / hard): ").lower()
-
-        if level in ["easy", "medium", "hard"]:
-            return level
-
-        print(Fore.RED + "Invalid difficulty. Please choose easy, medium, or hard.")
-
-
+# --- Load riddles safely ---
 def load_riddles(level):
     riddles = []
-
-    try:
-        with open(RIDDLE_FILE, "r") as file:
-            for line in file:
-                difficulty, riddle, answer = line.strip().split("|")
-
-                if difficulty.lower() == level:
-                    riddles.append((riddle, answer))
-
-    except FileNotFoundError:
-        print("Riddle database not found.")
-        return []
-
+    if not os.path.exists(RIDDLE_FILE):
+        print(Fore.RED + "Riddle database not found.")
+        return riddles
+    with open(RIDDLE_FILE, "r") as file:
+        for line in file:
+            parts = line.strip().split("|")
+            if len(parts) != 3:
+                continue
+            difficulty, riddle, answer = parts
+            if difficulty.lower() == level.lower():
+                riddles.append((riddle, answer))
     return riddles
 
-
-def play_game(questions):
-    score = 0
-
-    for riddle, answer in questions:
-
-        print(Fore.BLUE + "\nRiddle: " + riddle)
-
-        start_time = time.time()
-
-        user_answer = input("Your answer: ").strip().lower()
-
-        end_time = time.time()
-
-        if end_time - start_time > 10:
-            print(Fore.RED + "⏱ Time's up!")
-            print("Answer:", answer)
-            continue
-
-        if check_answer(user_answer, answer):
-            print(Fore.GREEN + "✅ Correct!")
-            score += 1
-        else:
-            print(Fore.RED + "❌ Wrong!")
-            print("Answer:", answer)
-
-    return score
-
-
+# --- Check answer ---
 def check_answer(user_answer, correct_answer):
-    return user_answer == correct_answer
+    return user_answer.strip().lower() == correct_answer.strip().lower()
 
-
+# --- Update leaderboard ---
 def update_leaderboard(name, score):
-    with open(LEADERBOARD_FILE, "a") as file:
-        file.write(f"{name},{score}\n")
-
-
-def show_leaderboard():
-    print(Fore.MAGENTA + "\n📊 Leaderboard")
-
-    scores = []
-
-    try:
+    leaderboard = []
+    if os.path.exists(LEADERBOARD_FILE):
         with open(LEADERBOARD_FILE, "r") as file:
             for line in file:
-                name, score = line.strip().split(",")
-                scores.append((name, int(score)))
+                try:
+                    player, points = line.strip().split(",")
+                    leaderboard.append((player, int(points)))
+                except:
+                    continue
+    leaderboard.append((name, score))
+    leaderboard.sort(key=lambda x: x[1], reverse=True)
+    with open(LEADERBOARD_FILE, "w") as file:
+        for player, points in leaderboard[:10]:  # Keep top 10
+            file.write(f"{player},{points}\n")
+    return leaderboard[:10]
 
-    except FileNotFoundError:
-        print("No leaderboard data yet.")
-        return
-
-    scores.sort(key=lambda x: x[1], reverse=True)
-
-    for i, (name, score) in enumerate(scores[:5], start=1):
-        print(f"{i}. {name} - {score}")
-
-
-def save_history(name, difficulty, score):
+# --- Update history ---
+def update_history(name, difficulty, score):
     with open(HISTORY_FILE, "a") as file:
         file.write(f"{name},{difficulty},{score}\n")
 
+# --- Play a game session ---
+def play_game(name, difficulty):
+    riddles = load_riddles(difficulty)
+    if len(riddles) < 5:
+        print(Fore.RED + "Not enough riddles for this difficulty.")
+        return 0
+    random.shuffle(riddles)
+    score = 0
+    for i, (riddle, answer) in enumerate(riddles[:5], 1):  # 5 riddles per round
+        print(Fore.CYAN + f"Riddle {i}: {riddle}")
+        start_time = time.time()
+        user_answer = input("Your answer: ")
+        end_time = time.time()
+        if end_time - start_time > 30:  # 30 sec timer
+            print(Fore.YELLOW + "Time's up!")
+        elif check_answer(user_answer, answer):
+            print(Fore.GREEN + "Correct!")
+            score += 1
+        else:
+            print(Fore.RED + f"Wrong! Correct answer: {answer}")
+    print(Fore.MAGENTA + f"\n{name}, your score this round: {score}/5")
+    update_history(name, difficulty, score)
+    leaderboard = update_leaderboard(name, score)
+    print(Fore.BLUE + "\n--- Leaderboard (Top 10) ---")
+    for i, (player, points) in enumerate(leaderboard, 1):
+        print(Fore.BLUE + f"{i}. {player} - {points}")
+    return score
 
-def play_again():
-    answer = input("\nPlay again? (yes/no): ").lower()
-    return answer == "yes"
+# --- Main function ---
+def main():
+    print(Fore.CYAN + """
+██████╗ ██╗ ██████╗ ██████╗ ██╗     ███████╗
+██╔══██╗██║██╔═══██╗██╔══██╗██║     ██╔════╝
+██████╔╝██║██║   ██║██████╔╝██║     █████╗  
+██╔═══╝ ██║██║   ██║██╔══██╗██║     ██╔══╝  
+██║     ██║╚██████╔╝██║  ██║███████╗███████╗
+╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
+""")
+    print(Fore.CYAN + "      RIDDLE QUIZ GAME\n")
+    name = input("Enter your name: ").strip()
+    while True:
+        difficulty = input("Choose difficulty (easy / medium / hard): ").strip().lower()
+        if difficulty in ["easy", "medium", "hard"]:
+            break
+        print(Fore.RED + "Invalid difficulty. Try again.")
+    
+    play_game(name, difficulty)
 
+    while True:
+        again = input("\nPlay again? (y/n): ").strip().lower()
+        if again == "y":
+            while True:
+                difficulty = input("Choose difficulty (easy / medium / hard): ").strip().lower()
+                if difficulty in ["easy", "medium", "hard"]:
+                    break
+                print(Fore.RED + "Invalid difficulty. Try again.")
+            play_game(name, difficulty)
+        else:
+            print(Fore.CYAN + "\nThanks for playing! Goodbye.")
+            break
 
+# --- Run main ---
 if __name__ == "__main__":
     main()
