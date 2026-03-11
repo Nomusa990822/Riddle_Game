@@ -82,21 +82,16 @@ def play_game(name, difficulty):
 
 # --- Main function ---
 def main():
-    print(Fore.CYAN + """
-██████╗ ██╗ ██████╗ ██████╗ ██╗     ███████╗
-██╔══██╗██║██╔═══██╗██╔══██╗██║     ██╔════╝
-██████╔╝██║██║   ██║██████╔╝██║     █████╗  
-██╔═══╝ ██║██║   ██║██╔══██╗██║     ██╔══╝  
-██║     ██║╚██████╔╝██║  ██║███████╗███████╗
-╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝
-""")
-    print(Fore.CYAN + "      RIDDLE QUIZ GAME\n")
+    print("\n==============================")
+    print("      RIDDLE QUIZ GAME        ")
+    print("==============================\n")
     name = input("Enter your name: ").strip()
+    
     while True:
         difficulty = input("Choose difficulty (easy / medium / hard): ").strip().lower()
         if difficulty in ["easy", "medium", "hard"]:
             break
-        print(Fore.RED + "Invalid difficulty. Try again.")
+        print("Invalid difficulty. Try again.")
     
     play_game(name, difficulty)
 
@@ -107,10 +102,10 @@ def main():
                 difficulty = input("Choose difficulty (easy / medium / hard): ").strip().lower()
                 if difficulty in ["easy", "medium", "hard"]:
                     break
-                print(Fore.RED + "Invalid difficulty. Try again.")
+                print("Invalid difficulty. Try again.")
             play_game(name, difficulty)
         else:
-            print(Fore.CYAN + "\nThanks for playing! Goodbye.")
+            print("\nThanks for playing! Goodbye.")
             break
 
 # --- Run main ---
