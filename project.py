@@ -65,7 +65,7 @@ def play_game(name, difficulty):
         start_time = time.time()
         user_answer = input("Your answer: ")
         end_time = time.time()
-        if end_time - start_time > 30:  # 30 sec timer
+        if end_time - start_time > 60:  # 60 sec timer
             print(Fore.YELLOW + "Time's up!")
         elif check_answer(user_answer, answer):
             print(Fore.GREEN + "Correct!")
