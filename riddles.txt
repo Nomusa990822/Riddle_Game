@@ -1,74 +1,217 @@
 easy|What has keys but can't open locks?|piano
 easy|What gets wetter the more it dries?|towel
-easy|What has hands but cannot clap?|clock
-easy|What has a neck but no head?|bottle
-easy|What runs but never walks?|water
-easy|What has a face and two hands but no arms or legs?|clock
-easy|What can you catch but not throw?|cold
-easy|What has to be broken before you can use it?|egg
-easy|What has one eye but cannot see?|needle
-easy|What comes down but never goes up?|rain
-easy|What has a thumb and four fingers but is not alive?|glove
-easy|What has words but never speaks?|book
-easy|What has a ring but no finger?|telephone
-easy|What goes up but never comes down?|age
-easy|What can travel around the world while staying in a corner?|stamp
-easy|What has wheels and flies but is not an aircraft?|garbage truck
-easy|What has a bed but never sleeps?|river
-easy|What has a head and a tail but no body?|coin
 easy|What has many teeth but cannot bite?|comb
-easy|What can be cracked, made, told, and played?|joke
-easy|What has a heart that doesn’t beat?|artichoke
-easy|What has cities but no houses?|map
-easy|What has an eye but cannot see?|hurricane
+easy|What has hands but cannot clap?|clock
+easy|What goes up but never comes down?|age
 easy|What has a neck but no head?|bottle
+easy|What has a face but no eyes, mouth or nose?|clock
+easy|What gets bigger the more you take away?|hole
+easy|What has legs but doesn't walk?|table
+easy|What runs but never walks?|water
+easy|What has one eye but cannot see?|needle
+easy|What building has the most stories?|library
+easy|What has words but never speaks?|book
+easy|What has a head and a tail but no body?|coin
+easy|What kind of band never plays music?|rubber band
+easy|What has an eye but can’t see yet holds the sea?|hurricane
+easy|What has a ring but no finger?|telephone
+easy|What can you catch but not throw?|cold
+easy|What can travel around the world while staying in a corner?|stamp
 easy|What has a bark but no bite?|tree
-easy|What has keys but opens no doors?|piano
+easy|What gets broken without being held?|promise
+easy|What comes down but never goes up?|rain
+easy|What goes up and down but stays in the same place?|stairs
+easy|What is full of holes but still holds water?|sponge
+easy|What has ears but cannot hear?|corn
+easy|What has words but never talks?|book
+easy|What is always running but never walks?|water
+easy|What has wheels and flies but is not an aircraft?|garbage truck
+easy|What turns everything it touches into gold?|midas
+easy|What can be cracked, made, told, and played?|joke
+easy|What goes up when the rain comes down?|umbrella
+easy|What has four wheels and flies?|garbage truck
+easy|What has a tail but no body?|coin
+easy|What is so fragile that saying its name breaks it?|silence
+easy|I’m light as a feather yet the strongest man can’t hold me for much more than a minute.|breath
+easy|What belongs to you but others use it more than you do?|name
+easy|Forward I am heavy, backward I am not. What am I?|ton
+easy|What has a thumb and four fingers but is not alive?|glove
+easy|What always speaks the truth but cannot move?|mirror
+easy|What has holes yet holds water?|sponge
+easy|What runs all around a backyard yet never moves?|fence
+easy|What has to be broken before you can use it?|egg
 easy|What has a face but no eyes?|clock
-easy|What can you break without touching it?|promise
-easy|What can run but never walks?|water
-easy|What comes once in a minute, twice in a moment, but never in a thousand years?|letter m
-medium|I speak without a mouth and hear without ears|echo
-medium|What can fill a room but takes up no space|light
-medium|What gets sharper the more you use it|brain
-medium|What belongs to you but others use it more than you do|name
-medium|What gets broken without being held|promise
-medium|The more of this there is, the less you see|darkness
-medium|I have cities but no houses, forests but no trees, and rivers but no water|map
-medium|The more you take, the more you leave behind|footsteps
-medium|I am always hungry and will die if not fed, but if you water me, I die|fire
-medium|What has a head, a tail, is brown, and has no legs|penny
-medium|I am tall when I am young and short when I am old|candle
-medium|I have keys but no locks. I have space but no room. You can enter but can’t go outside|keyboard
-medium|I’m light as a feather, yet the strongest man can’t hold me for much longer than a minute|breath
-medium|The more you take away, the more I become|hole
-medium|I can be cracked, made, told, and played|joke
-medium|The more you take from me, the bigger I get|hole
-medium|I’m always in front of you but can’t be seen|future
-medium|I can fly without wings. I can cry without eyes. Wherever I go, darkness follows me|cloud
-medium|What comes once in a minute, twice in a moment, but never in a thousand years?|letter m
-medium|What is so fragile that saying its name breaks it?|silence
-hard|What disappears as soon as you say its name|silence
-hard|I have branches but no fruit, trunk or leaves|bank
-hard|What can run but never walks|river
-hard|What invention lets you look through a wall|window
-hard|Feed me and I live, give me a drink and I die|fire
-hard|I am always in front of you, but can’t be seen|future
-hard|The more you take, the more you leave behind|footsteps
-hard|I am not alive, but I grow. I don’t have lungs, but I need air. What am I?|fire
-hard|I can be cracked, made, told, and played|joke
-hard|I speak without a mouth and hear without ears. I have no body, but I come alive with wind|echo
-hard|I have keys but no locks. I have space but no room. You can enter, but you can’t go outside|keyboard
-hard|I’m always hungry and will die if not fed, but if you water me, I die|fire
-hard|I am taken from a mine, and shut up in a wooden case, from which I am never released, and yet I am used by almost every person|pencil lead
-hard|The more you take away from me, the bigger I get|hole
-hard|I can fly without wings, I can cry without eyes. Wherever I go, darkness follows me|cloud
-hard|What has a head, a tail, is brown, and has no legs|penny
-hard|I am tall when I am young and short when I am old|candle
-hard|I have keys but no locks, with space but no room. You can enter, but can’t go outside|keyboard
-hard|I have an eye but cannot see. I am faster than any man alive. What am I?|needle
-hard|I am the beginning of the end, and the end of time and space. What am I?|letter e
-hard|I can bring back the dead; make us cry, make us laugh, make us young. What am I?|memory
-hard|I have lakes with no water, mountains with no stone, and cities with no buildings. What am I?|map
-hard|I am always in front of you, yet can’t be seen. What am I?|future
-hard|What flies without wings and cries without eyes?|cloud
+easy|What comes once in a minute, twice in a moment, but never in a thousand years?|m
+easy|What gets wetter the more it dries?|towel
+easy|What can fill a room but takes up no space?|light
+easy|What question can you never answer yes to?|are you asleep
+easy|What has cities but no houses?|map
+easy|What can you hold without touching it?|conversation
+easy|What kind of coat is put on wet?|paint
+easy|What has a spine but no bones?|book
+easy|What tastes better than it smells?|tongue
+easy|What grows when it eats but dies when it drinks?|fire
+easy|What has feet but no legs?|ruler
+easy|What comes in many colors and is used to make rainbows?|crayon
+easy|What can you wear on your head but it’s not a hat?|helmet
+easy|I am tall when I am young and short when I am old.|candle
+easy|What has 88 keys but cannot open a single door?|piano
+easy|What flies forever, rests never?|wind
+easy|What belongs to everyone but is used by others more?|name
+easy|I follow you all day but vanish at night.|shadow
+easy|The more you take, the more you leave behind.|footsteps
+easy|I have hands but cannot hold anything.|clock
+easy|I am always hungry, I must always be fed.|fire
+easy|What runs around a house but never moves?|fence
+easy|What can you break even if you never pick it up?|promise
+easy|I can be cracked, made, told, and played.|riddle
+easy|What has many needles but doesn’t sew?|pine tree
+easy|What goes up but never comes down?|age
+easy|I fly without wings, I cry without eyes.|cloud
+easy|I am always coming but never arrives.|tomorrow
+easy|I have lakes with no water, mountains with no stone.|map
+easy|I speak without a mouth and hear without ears.|echo
+easy|I’m found in socks, scarves, and mittens; often in the paws of kittens.|yarn
+medium|I speak without a mouth and hear without ears. What am I?|echo
+medium|What goes up but never comes down?|age
+medium|The more you take, the more you leave behind.|footsteps
+medium|What gets bigger the more you take away?|hole
+medium|What can you catch but not throw?|cold
+medium|What invention lets you look right through a wall?|window
+medium|What is always in front of you but can’t be seen?|future
+medium|What has a heart that doesn’t beat?|artichoke
+medium|The more of this there is, the less you see.|darkness
+medium|What has branches but no fruit, trunk or leaves?|bank
+medium|What has many needles but doesn’t sew?|pine tree
+medium|What is full of holes but still holds water?|sponge
+medium|What has a trunk but no suitcase?|elephant
+medium|What can run but never walks?|river
+medium|What has keys but can’t open locks?|piano
+medium|What begins with T, ends with T, and has tea in it?|teapot
+medium|What word becomes shorter when you add two letters to it?|short
+medium|What is so delicate that saying its name breaks it?|silence
+medium|What has a neck but no head?|bottle
+medium|What never asks a question but gets answered all the time?|doorbell
+medium|What has many rings but no fingers?|telephone
+medium|What building has the most stories?|library
+medium|What gets sharper the more you use it?|brain
+medium|What has one head, one foot, and four legs?|bed
+medium|Forward I am heavy, backward I am not.|ton
+medium|What can travel around the world while staying in a corner?|stamp
+medium|What is always coming but never arrives?|tomorrow
+medium|What gets broken without being held?|promise
+medium|I have lakes with no water, mountains with no stone.|map
+medium|What has a bottom at the top?|leg
+medium|What flies without wings?|time
+medium|What runs but never tires?|water
+medium|What is the center of gravity?|v
+medium|What has a ring but no finger?|phone
+medium|What is used to measure time?|clock
+medium|What has holes but lets light pass through?|window
+medium|What stays in one corner but travels the world?|stamp
+medium|What do you call an alligator in a vest?|investigator
+medium|I am tall when I am young and short when I am old.|candle
+medium|What has roots nobody sees, is taller than trees?|mountain
+medium|What has teeth but cannot eat?|comb
+medium|What goes up and down but never moves?|stairs
+medium|If you feed me I live, if you give me water I die.|fire
+medium|A box without hinges, key, or lid, yet golden treasure inside is hid.|egg
+medium|What has four wheels and flies but is not an aircraft?|garbage truck
+medium|I have lakes with no water, mountains with no stone.|map
+medium|I fly without wings, I cry without eyes.|cloud
+medium|The more you have of me, the less you see.|darkness
+medium|I have no life, but I can die. What am I?|battery
+medium|I shave every day, but my beard stays the same.|barber
+medium|What has 13 hearts but no other organs?|deck of cards
+medium|I can be long or short; I can be grown or bought.|hair
+medium|What is bought by the yard but worn by the foot?|carpet
+medium|I follow you all day long, but when the night comes, I’m gone.|shadow
+medium|What has a key but opens no locks?|piano
+medium|I have a neck but no head.|bottle
+medium|I can fill a room but take up no space.|light
+medium|The more you take away from me, the bigger I become.|hole
+medium|I am lighter than a feather, yet the strongest man cannot hold me for long.|breath
+medium|Which letter of the alphabet has the most water?|c
+medium|I go all around the world but always stay in a corner.|stamp
+medium|I have keys but no locks and space but no room.|keyboard
+medium|What can be cracked, made, told, and played?|riddle
+medium|I have a spine but no bones.|book
+medium|I can be seen in water, but I never get wet.|reflection
+medium|I have cities but no houses, forests but no trees, and rivers but no water.|map
+medium|I have hands but cannot hold anything.|clock
+medium|I am always hungry, I must always be fed.|fire
+medium|What has a tongue but cannot taste?|shoe
+medium|What can travel the world without leaving its corner?|stamp
+hard|I am not alive but I grow; I don’t have lungs but I need air.|fire
+hard|What disappears as soon as you say its name?|silence
+hard|What has a tongue that cannot taste, eyes that cannot see, and a soul that cannot die?|shoe
+hard|I can be cracked, made, told, and played. What am I?|joke
+hard|What is so fragile that saying its name breaks it?|silence
+hard|I have keys but no locks, I have space but no room. What am I?|keyboard
+hard|What has an eye but cannot see?|needle
+hard|I am tall when I am young and short when I am old.|candle
+hard|What gets larger the more you take away?|hole
+hard|What begins with an E and only contains one letter?|envelope
+hard|What flies forever, rests never?|wind
+hard|What has a head and a tail but no body?|coin
+hard|What breaks but never falls?|day
+hard|What falls but never breaks?|night
+hard|What can run but never walks?|water
+hard|What has a bottom at the top?|leg
+hard|What has cities but no houses?|map
+hard|What goes up but never comes down?|age
+hard|The more you take away, the larger I become.|hole
+hard|I have lakes with no water, mountains with no stone.|map
+hard|What comes once in a minute, twice in a moment, but never in a thousand years?|m
+hard|What gets wetter the more it dries?|towel
+hard|What is full of holes but still holds water?|sponge
+hard|What has roots nobody sees, Is taller than trees.|mountain
+hard|Forward I am heavy, backward I am not.|ton
+hard|If you feed me I live, if you give me water I die.|fire
+hard|A box without hinges, key, or lid, yet golden treasure inside is hid.|egg
+hard|What has four wheels and flies but is not an aircraft?|garbage truck
+hard|I fly without wings and cry without eyes.|cloud
+hard|The more you have of me, the less you see.|darkness
+hard|I have no life, but I can die. What am I?|battery
+hard|I speak without a mouth and hear without ears. I have no body.|echo
+hard|I shave every day, but my beard stays the same.|barber
+hard|What has 13 hearts but no other organs?|deck of cards
+hard|I can be long or short; I can be grown or bought.|hair
+hard|What is bought by the yard but worn by the foot?|carpet
+hard|I follow you all day long, but when the night comes, I’m gone.|shadow
+hard|What has a key but opens no locks?|piano
+hard|I have a neck but no head.|bottle
+hard|I can fill a room but take up no space.|light
+hard|The more you take away from me, the bigger I become.|hole
+hard|I am lighter than a feather, yet the strongest man cannot hold me for long.|breath
+hard|Which letter of the alphabet has the most water?|c
+hard|I go all around the world but always stay in a corner.|stamp
+hard|I have keys but no locks and space but no room.|keyboard
+hard|What can be cracked, made, told, and played?|riddle
+hard|I have a spine but no bones.|book
+hard|I can be seen in water, but I never get wet.|reflection
+hard|I have cities but no houses, forests but no trees, and rivers but no water.|map
+hard|I have hands but cannot hold anything.|clock
+hard|I am always hungry, I must always be fed.|fire
+hard|What has a tongue but cannot taste?|shoe
+hard|What can travel the world without leaving its corner?|stamp
+hard|I am taken from a mine and shut in a wooden case, from which I am never released, and yet I am used by almost every person.|pencil lead
+hard|I have no wings, yet I can fly; I have no eyes, yet I will cry.|cloud
+hard|The more you take, the more I leave behind.|footsteps
+hard|What can bring back the dead; make us cry, make us laugh, make us young; is born in an instant, yet lasts a lifetime?|memory
+hard|I can sizzle like bacon, I am made with an egg, I have plenty of backbone but lack a good leg, I peel layers like onions, but remain whole, I can be long, like a flagpole, yet fit in a hole. What am I?|snake
+hard|I am seen in the water, but I never get wet.|reflection
+hard|I go all around the world but always stay in a corner.|stamp
+hard|The more you take, the more I leave behind.|footsteps
+hard|I have branches, but no fruit, trunk or leaves.|bank
+hard|What has a head, a tail, is brown, and has no legs?|penny
+hard|I have cities but no houses, forests but no trees, and rivers but no water.|map
+hard|What has to be broken before you can use it?|egg
+hard|I am not alive, but I can grow; I don’t have lungs, but I need air.|fire
+hard|I am always hungry, I must always be fed.|fire
+hard|The more you take from me, the bigger I become.|hole
+hard|I can be cracked, made, told, and played.|riddle
+hard|I am tall when young and short when old.|candle
+hard|I have keys but no locks, I have space but no room.|keyboard
+hard|I fly without wings and cry without eyes.|cloud
+hard|What can you hold without touching it?|conversation
