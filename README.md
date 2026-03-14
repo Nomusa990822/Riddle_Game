@@ -34,16 +34,16 @@ riddle-quiz-game
 
 ## ⚙️ Installation
 
-Clone the repository:
-Navigate into the project folder: cd riddle-quiz-game
-Install dependencies: pip install -r requirements.txt
+1. Clone the repository: https://github.com/Nomusa990822/Riddle_Game
+2. Navigate into the project folder: cd riddle-quiz-game
+3. Install dependencies: pip install -r requirements.txt
 
 ---
 
 ## ▶️ Running the Game
 
-Run the game using: python project.py
-If Python 3 is required: python3 project.py
+1. Run the game using: python project.py
+2. If Python 3 is required: python3 project.py
 
 ---
 
