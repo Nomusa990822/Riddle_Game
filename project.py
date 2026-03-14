@@ -1,114 +1,170 @@
 import random
 import time
-import matplotlib.pyplot as plt
-from database import init_db, save_score, get_leaderboard
+import os
 
 RIDDLE_FILE = "riddles.txt"
+LEADERBOARD_FILE = "leaderboard.txt"
+HISTORY_FILE = "history.txt"
 
 
 def load_riddles():
+    """
+    Load riddles from riddles.txt and organize them by difficulty.
+    """
     riddles = {"easy": [], "medium": [], "hard": []}
+
+    if not os.path.exists(RIDDLE_FILE):
+        return riddles
 
     with open(RIDDLE_FILE, "r", encoding="utf-8") as file:
         for line in file:
-            difficulty, question, answer = line.strip().split("|")
-            riddles[difficulty].append((question, answer))
+            parts = line.strip().split("|")
+
+            if len(parts) != 3:
+                continue
+
+            difficulty, question, answer = parts
+
+            difficulty = difficulty.lower()
+
+            if difficulty in riddles:
+                riddles[difficulty].append((question, answer))
 
     return riddles
 
 
-def ask_riddle(question, answer):
+def ask_question(question, answer, time_limit=20):
+    """
+    Ask the user a riddle and check if the answer is correct.
+    Includes a timer.
+    """
 
-    print("\n🧩", question)
+    print("\n🧩 Riddle:")
+    print(question)
 
-    start = time.time()
+    start_time = time.time()
+
     user_answer = input("Your answer: ").strip().lower()
-    end = time.time()
 
-    correct = user_answer == answer.lower()
-    response_time = round(end - start, 2)
+    elapsed_time = time.time() - start_time
 
-    if correct:
+    if elapsed_time > time_limit:
+        print("⏰ Time's up!")
+        return False
+
+    if user_answer == answer.lower():
         print("✅ Correct!")
+        return True
     else:
-        print(f"❌ Wrong! Correct answer: {answer}")
+        print(f"❌ Wrong! The correct answer was: {answer}")
+        return False
 
-    return correct, response_time
+
+def update_leaderboard(name, score):
+    """
+    Save player score to leaderboard.txt
+    """
+
+    with open(LEADERBOARD_FILE, "a") as file:
+        file.write(f"{name},{score}\n")
 
 
-def plot_statistics(scores):
+def display_leaderboard():
+    """
+    Display top scores from leaderboard.txt
+    """
 
-    if not scores:
+    print("\n🏆 Leaderboard")
+
+    if not os.path.exists(LEADERBOARD_FILE):
+        print("No scores yet.")
         return
 
-    plt.plot(scores)
-    plt.title("Player Performance Over Time")
-    plt.xlabel("Game Number")
-    plt.ylabel("Score")
-    plt.show()
+    scores = []
+
+    with open(LEADERBOARD_FILE, "r") as file:
+        for line in file:
+            parts = line.strip().split(",")
+
+            if len(parts) != 2:
+                continue
+
+            name, score = parts
+            scores.append((name, int(score)))
+
+    scores.sort(key=lambda x: x[1], reverse=True)
+
+    for i, (name, score) in enumerate(scores[:10], start=1):
+        print(f"{i}. {name} - {score}")
 
 
-def play():
+def save_history(name, difficulty, score):
+    """
+    Save game history
+    """
+
+    with open(HISTORY_FILE, "a") as file:
+        file.write(f"{name},{difficulty},{score}\n")
+
+
+def play_game():
+    """
+    Run a single game session.
+    """
 
     riddles = load_riddles()
 
-    print("\n🎮 RIDDLE CHALLENGE")
+    print("\n🧩 Welcome to the Riddle Quiz Game!")
 
-    name = input("Enter your name: ")
+    name = input("Enter your name: ").strip()
 
-    difficulty = input("Difficulty (easy / medium / hard): ").lower()
+    difficulty = input("Choose difficulty (easy / medium / hard): ").lower()
 
     if difficulty not in riddles:
-        print("Invalid difficulty")
+        print("Invalid difficulty.")
         return
 
-    questions = random.sample(riddles[difficulty], 5)
+    if len(riddles[difficulty]) == 0:
+        print("No riddles available for this difficulty.")
+        return
+
+    questions = random.sample(
+        riddles[difficulty], min(5, len(riddles[difficulty]))
+    )
 
     score = 0
-    times = []
 
     for question, answer in questions:
 
-        correct, response_time = ask_riddle(question, answer)
-
-        times.append(response_time)
+        correct = ask_question(question, answer)
 
         if correct:
             score += 1
 
-    print(f"\n🏁 Final Score: {score}/5")
+    print(f"\n🎯 Final Score: {score}/5")
 
-    save_score(name, score)
+    update_leaderboard(name, score)
 
-    leaderboard = get_leaderboard()
+    save_history(name, difficulty, score)
 
-    print("\n🏆 Leaderboard")
-
-    for i, player in enumerate(leaderboard[:10], start=1):
-        print(f"{i}. {player[0]} - {player[1]}")
-
-    plot = input("\nShow performance graph? (y/n): ")
-
-    if plot.lower() == "y":
-        scores = [player[1] for player in leaderboard]
-        plot_statistics(scores)
+    display_leaderboard()
 
 
 def main():
-
-    init_db()
+    """
+    Main game loop.
+    """
 
     while True:
 
-        play()
+        play_game()
 
-        again = input("\nPlay again? (y/n): ")
+        again = input("\nPlay again? (yes/no): ").lower()
 
-        if again.lower() != "y":
-            print("Thanks for playing!")
+        if again != "yes":
+            print("\nThanks for playing!")
             break
 
 
 if __name__ == "__main__":
     main()
-            
