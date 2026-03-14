@@ -1,36 +1,78 @@
 import random
 import time
-import matplotlib.pyplot as plt
-from colorama import Fore, Style, init
+import os
 
-init(autoreset=True)
+# Load riddles from file
+def load_riddles(difficulty):
+    riddles = []
+    with open("riddles.txt", "r", encoding="utf-8") as file:
+        for line in file:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split("|")
+            if len(parts) != 3:
+                continue
+            riddle_diff, riddle, answer = parts
+            if riddle_diff.lower() == difficulty.lower():
+                riddles.append((riddle, answer))
+    if len(riddles) < 1:
+        print("Not enough riddles for this difficulty.")
+        exit()
+    return riddles
 
-POINTS = {"easy": 1, "medium": 2, "hard": 3}
-RIDDLE_FILE = "riddles.txt"
-LEADERBOARD_FILE = "leaderboard.txt"
-HISTORY_FILE = "history.txt"
-STATS_FILE = "stats.txt"
+# Update leaderboard
+def update_leaderboard(name, score):
+    leaderboard = []
+    if os.path.exists("leaderboard.txt"):
+        with open("leaderboard.txt", "r", encoding="utf-8") as f:
+            for line in f:
+                parts = line.strip().split("|")
+                if len(parts) != 2:
+                    continue
+                leaderboard.append((parts[0], int(parts[1])))
+    leaderboard.append((name, score))
+    leaderboard.sort(key=lambda x: x[1], reverse=True)
+    leaderboard = leaderboard[:10]  # top 10
+    with open("leaderboard.txt", "w", encoding="utf-8") as f:
+        for entry in leaderboard:
+            f.write(f"{entry[0]}|{entry[1]}\n")
 
+# Show leaderboard
+def show_leaderboard():
+    print("\n--- LEADERBOARD ---")
+    if not os.path.exists("leaderboard.txt"):
+        print("No leaderboard yet!")
+        return
+    with open("leaderboard.txt", "r", encoding="utf-8") as f:
+        for line in f:
+            parts = line.strip().split("|")
+            if len(parts) == 2:
+                print(f"{parts[0]}: {parts[1]} points")
 
-def main():
-    show_banner()
-    player = input("Enter your name: ").strip()
+# Save game history
+def save_history(name, difficulty, score):
+    with open("history.txt", "a", encoding="utf-8") as f:
+        f.write(f"{name}|{difficulty}|{score}\n")
 
-    while True:
-        mode = input("\nPlay 'game' or 'simulate'? ").strip().lower()
-        if mode == "game":
-            play_game_mode(player)
-        elif mode == "simulate":
-            results = run_simulation(1000)
-            plot_simulation(results)
+# Ask riddles with timer
+def play_riddles(riddles):
+    score = 0
+    # Play 5 random riddles per game
+    for riddle, answer in random.sample(riddles, min(5, len(riddles))):
+        print("\nRiddle:", riddle)
+        start_time = time.time()
+        user_answer = input("Your answer: ").strip().lower()
+        end_time = time.time()
+        elapsed = end_time - start_time
+        if elapsed > 20:  # 20-second timer per riddle
+            print("Time's up!")
+        elif user_answer == answer.lower():
+            print("Correct!")
+            score += 1
         else:
-            print("Invalid option.")
-
-        again = input("\nExit or continue? (exit/continue): ").strip().lower()
-        if again == "exit":
-            print("Goodbye!")
-            break
-
+            print(f"Wrong! The answer was: {answer}")
+    return score
 
 def show_banner():
     print(Fore.CYAN + """
@@ -40,176 +82,27 @@ def show_banner():
 ██╔══██╗██║██║  ██║██║  ██║██║     ██╔══╝
 ██║  ██║██║██████╔╝██████╔╝███████╗███████╗
 ╚═╝  ╚═╝╚═╝╚═════╝ ╚═════╝ ╚══════╝╚══════╝
-        RIDDLE QUIZ GAME
 """)
+print("RIDDLE QUIZ GAME\nLoading game...\n")
 
+    name = input("Enter your name: ").strip()
+    difficulty = input("Choose difficulty (easy / medium / hard): ").strip().lower()
 
-def get_riddles(difficulty):
-    riddles = []
-    with open(RIDDLE_FILE, "r") as file:
-        for line in file:
-            parts = line.strip().split("|")
-            if len(parts) != 3:
-                continue
-            diff, riddle, answer = parts
-            if diff.lower() == difficulty:
-                riddles.append((riddle, answer))
-    return riddles
+    riddles = load_riddles(difficulty)
+    score = play_riddles(riddles)
+    print(f"\n{name}, your score is: {score}")
 
+    update_leaderboard(name, score)
+    save_history(name, difficulty, score)
 
-def play_game_mode(player):
-    difficulty = input("Choose difficulty (easy/medium/hard): ").strip().lower()
-    all_riddles = get_riddles(difficulty)
-    if len(all_riddles) < 5:
-        print("Not enough riddles found!")
-        return
-
-    selected = random.sample(all_riddles, 5)
-    score = 0
-
-    for riddle, answer in selected:
-        print(Fore.BLUE + "\n" + riddle)
-        start = time.time()
-        user = input("Your answer: ").strip().lower()
-        end = time.time()
-
-        if end - start > 10:
-            print(Fore.RED + "Time's up!")
-            print("Answer was:", answer)
-        else:
-            if user == answer.lower():
-                print(Fore.GREEN + "Correct!")
-                score += POINTS[difficulty]
-            else:
-                print(Fore.RED + "Wrong! Answer:", answer)
-
-    print(Fore.YELLOW + f"\nFinal score: {score}")
-    update_leaderboard(player, score)
-    update_history(player, difficulty, score)
-    update_stats(player, score)
     show_leaderboard()
-    show_player_stats(player)
-    show_achievements(score)
 
-
-def update_leaderboard(player, score):
-    board = []
-    try:
-        with open(LEADERBOARD_FILE, "r") as f:
-            for line in f:
-                name, sc = line.strip().split(",")
-                board.append((name, int(sc)))
-    except FileNotFoundError:
-        pass
-
-    board.append((player, score))
-    board.sort(key=lambda x: x[1], reverse=True)
-    board = board[:10]
-    with open(LEADERBOARD_FILE, "w") as f:
-        for name, sc in board:
-            f.write(f"{name},{sc}\n")
-
-
-def show_leaderboard():
-    print(Fore.MAGENTA + "\n🏆 Leaderboard")
-    try:
-        with open(LEADERBOARD_FILE, "r") as f:
-            for idx, line in enumerate(f, 1):
-                name, sc = line.strip().split(",")
-                print(f"{idx}. {name} — {sc}")
-    except FileNotFoundError:
-        print("No leaderboard yet.")
-
-
-def update_history(player, diff, score):
-    with open(HISTORY_FILE, "a") as f:
-        f.write(f"{player},{diff},{score}\n")
-
-
-def update_stats(player, score):
-    stats = {}
-    try:
-        with open(STATS_FILE, "r") as f:
-            for line in f:
-                name, games, total, best = line.strip().split(",")
-                stats[name] = [int(games), int(total), int(best)]
-    except FileNotFoundError:
-        pass
-
-    if player in stats:
-        stats[player][0] += 1
-        stats[player][1] += score
-        stats[player][2] = max(stats[player][2], score)
+    play_again = input("\nDo you want to play again? (yes/no): ").strip().lower()
+    if play_again == "yes":
+        main()
     else:
-        stats[player] = [1, score, score]
-
-    with open(STATS_FILE, "w") as f:
-        for nm, data in stats.items():
-            f.write(f"{nm},{data[0]},{data[1]},{data[2]}\n")
-
-
-def show_player_stats(player):
-    try:
-        with open(STATS_FILE, "r") as f:
-            for line in f:
-                name, games, total, best = line.strip().split(",")
-                if name == player:
-                    avg = int(total) / int(games)
-                    print(Fore.CYAN + "\n📊 Your Stats:")
-                    print(f"Games played: {games}")
-                    print(f"Best score: {best}")
-                    print(f"Average score: {avg:.1f}")
-    except FileNotFoundError:
-        pass
-
-
-def show_achievements(score):
-    ach = []
-    if score >= 3:
-        ach.append("🧠 Clever Thinker")
-    if score >= 6:
-        ach.append("🧩 Puzzle Solver")
-    if score >= 9:
-        ach.append("👑 Riddle King")
-    if ach:
-        print(Fore.YELLOW + "\n⭐ Achievements unlocked:")
-        for a in ach:
-            print("-", a)
-
-
-def simulate_player(difficulty):
-    total = 0
-    for _ in range(5):
-        chance = random.random()
-        if difficulty == "easy":
-            correct = chance < 0.9
-        elif difficulty == "medium":
-            correct = chance < 0.7
-        else:
-            correct = chance < 0.5
-        if correct:
-            total += POINTS[difficulty]
-    return total
-
-
-def run_simulation(n):
-    results = {"easy": [], "medium": [], "hard": []}
-    for _ in range(n):
-        for d in results:
-            results[d].append(simulate_player(d))
-    return results
-
-
-def plot_simulation(results):
-    plt.figure(figsize=(8, 6))
-    for d, scores in results.items():
-        plt.hist(scores, bins=range(0, 16), alpha=0.5, label=d.capitalize())
-    plt.title("Simulation of Player Scores by Difficulty")
-    plt.xlabel("Score")
-    plt.ylabel("Frequency")
-    plt.legend()
-    plt.show()
-
+        print("\nThanks for playing!")
 
 if __name__ == "__main__":
     main()
+    
