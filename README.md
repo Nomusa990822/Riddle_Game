@@ -110,7 +110,7 @@ Answer: towel
 
 🏆 Final Score: 3/5
 
-**The score is then automatically saved to the leaderboard**
+The score is then automatically saved to the leaderboard
 ---
 
 ## 📊 Leaderboard and History
