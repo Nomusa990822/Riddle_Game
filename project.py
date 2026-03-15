@@ -103,7 +103,7 @@ def play_game(questions):
 
         end_time = time.time()
 
-        if end_time - start_time > 10:
+        if end_time - start_time > 60:
             print(Fore.RED + "⏱ Time's up!")
             print("Answer:", answer)
             continue
