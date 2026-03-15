@@ -1,1 +1,5 @@
-
+Alex,easy,5
+Jamie,medium,4
+Taylor,hard,3
+Morgan,easy,2
+Jordan,medium,1
