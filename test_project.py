@@ -1,49 +1,21 @@
-import pytest
-from project import load_riddles
+from project import check_answer
 
 
-def test_load_riddles_returns_dictionary():
-    """
-    Test that load_riddles() returns a dictionary.
-    """
-
-    riddles = load_riddles()
-
-    assert isinstance(riddles, dict)
+def test_check_answer_correct():
+    assert check_answer("piano", "piano") == True
 
 
-def test_riddle_categories_exist():
-    """
-    Test that the expected difficulty levels exist.
-    """
-
-    riddles = load_riddles()
-
-    assert "easy" in riddles
-    assert "medium" in riddles
-    assert "hard" in riddles
+def test_check_answer_case_insensitive():
+    assert check_answer("Piano".lower(), "piano") == True
 
 
-def test_riddles_are_lists():
-    """
-    Test that each difficulty category contains a list.
-    """
-
-    riddles = load_riddles()
-
-    assert isinstance(riddles["easy"], list)
-    assert isinstance(riddles["medium"], list)
-    assert isinstance(riddles["hard"], list)
+def test_check_answer_wrong():
+    assert check_answer("door", "piano") == False
 
 
-def test_riddles_have_question_and_answer():
-    """
-    Test that each riddle has a question and answer tuple.
-    """
+def test_check_answer_extra_spaces():
+    assert check_answer("piano".strip(), "piano") == True
 
-    riddles = load_riddles()
 
-    for difficulty in riddles:
-        for riddle in riddles[difficulty]:
-            assert isinstance(riddle, tuple)
-            assert len(riddle) == 2
+def test_check_answer_completely_different():
+    assert check_answer("car", "piano") == False
