@@ -140,6 +140,7 @@ Sam,hard,2
 
 ## 🎮 Game Flow Diagram
 
+```
 Start Program
       │
       ▼
@@ -189,7 +190,7 @@ Play Again?
       ├─ Yes → Restart Game
       │
       └─ No → Exit Program
-      
+```   
 ---
 
 ## 🧪 Running Tests
