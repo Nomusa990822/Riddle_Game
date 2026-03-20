@@ -164,6 +164,12 @@ _The score is then automatically saved to the leaderboard_
 
 ### Streamlit Web App
 
+**Home Screen**
+![Home](https://raw.githubusercontent.com/Nomusa990822/Riddle_Game/main/web1.PNG)
+
+**Gameplay**
+![Gameplay](https://raw.githubusercontent.com/Nomusa990822/Riddle_Game/main/web2.PNG)
+
 ---
 
 ## 📊 Data Storage
