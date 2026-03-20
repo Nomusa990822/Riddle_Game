@@ -1,7 +1,7 @@
 <h1 align="center">🧩 Riddle Quiz Game</h1>
 
 <p align="center">
-Terminal + Web App (Streamlit)
+🚀 Terminal Version + Deployed Web Application (Streamlit)
 </p>
 
 <p align="center">
@@ -24,6 +24,8 @@ An interactive Python-based riddle game available in two formats:
 - Terminal Version – classic command-line gameplay
 - Web App Version – built using Streamlit
 The game challenges players with randomized riddles, timed responses, and a competitive leaderboard system.
+
+This project demonstrates both **command-line application development** and **interactive web app deployment**.
 
 ---
 
