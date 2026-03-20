@@ -7,6 +7,8 @@ init(autoreset=True)
 RIDDLE_FILE = "riddles.txt"
 LEADERBOARD_FILE = "leaderboard.txt"
 HISTORY_FILE = "history.txt"
+QUESTIONS_PER_ROUND = 10
+TIME_LIMIT = 30
 
 
 def main():
@@ -17,23 +19,22 @@ def main():
 
     while True:
         difficulty = choose_difficulty()
-
         riddles = load_riddles(difficulty)
 
-        if len(riddles) < 5:
-            print("Not enough riddles for this difficulty.")
+        if len(riddles) < QUESTIONS_PER_ROUND:
+            print(
+                Fore.RED
+                + f"Not enough riddles for this difficulty. Need at least {QUESTIONS_PER_ROUND}."
+            )
             return
 
-        questions = random.sample(riddles, 5)
-
+        questions = random.sample(riddles, QUESTIONS_PER_ROUND)
         score = play_game(questions)
 
-        print(Fore.YELLOW + f"\n🏆 Final Score: {score}/5")
+        print(Fore.YELLOW + f"\n🏆 Final Score: {score}/{QUESTIONS_PER_ROUND}")
 
         update_leaderboard(name, score)
-
         save_history(name, difficulty, score)
-
         show_leaderboard()
 
         if not play_again():
@@ -42,7 +43,9 @@ def main():
 
 
 def show_banner():
-    print(Fore.CYAN + """
+    print(
+        Fore.CYAN
+        + """
 ██████╗ ██╗██████╗ ██████╗ ██╗     ███████╗
 ██╔══██╗██║██╔══██╗██╔══██╗██║     ██╔════╝
 ██████╔╝██║██║  ██║██║  ██║██║     █████╗
@@ -51,7 +54,8 @@ def show_banner():
 ╚═╝  ╚═╝╚═╝╚═════╝ ╚═════╝ ╚══════╝╚══════╝
 
         RIDDLE QUIZ GAME
-""")
+"""
+    )
 
 
 def loading_animation():
@@ -64,11 +68,9 @@ def loading_animation():
 
 def choose_difficulty():
     while True:
-        level = input("Choose difficulty (easy / medium / hard): ").lower()
-
+        level = input("Choose difficulty (easy / medium / hard): ").strip().lower()
         if level in ["easy", "medium", "hard"]:
             return level
-
         print(Fore.RED + "Invalid difficulty. Please choose easy, medium, or hard.")
 
 
@@ -76,15 +78,18 @@ def load_riddles(level):
     riddles = []
 
     try:
-        with open(RIDDLE_FILE, "r") as file:
+        with open(RIDDLE_FILE, "r", encoding="utf-8") as file:
             for line in file:
-                difficulty, riddle, answer = line.strip().split("|")
+                parts = line.strip().split("|")
+                if len(parts) != 3:
+                    continue
 
+                difficulty, riddle, answer = parts
                 if difficulty.lower() == level:
-                    riddles.append((riddle, answer))
+                    riddles.append((riddle.strip(), answer.strip().lower()))
 
     except FileNotFoundError:
-        print("Riddle database not found.")
+        print(Fore.RED + "Riddle database not found.")
         return []
 
     return riddles
@@ -93,17 +98,15 @@ def load_riddles(level):
 def play_game(questions):
     score = 0
 
-    for riddle, answer in questions:
-
-        print(Fore.BLUE + "\nRiddle: " + riddle)
+    for index, (riddle, answer) in enumerate(questions, start=1):
+        print(Fore.BLUE + f"\nRiddle {index}/{QUESTIONS_PER_ROUND}: {riddle}")
+        print(Fore.CYAN + f"⏳ You have {TIME_LIMIT} seconds.")
 
         start_time = time.time()
-
         user_answer = input("Your answer: ").strip().lower()
-
         end_time = time.time()
 
-        if end_time - start_time > 60:
+        if end_time - start_time > TIME_LIMIT:
             print(Fore.RED + "⏱ Time's up!")
             print("Answer:", answer)
             continue
@@ -119,11 +122,11 @@ def play_game(questions):
 
 
 def check_answer(user_answer, correct_answer):
-    return user_answer == correct_answer
+    return user_answer.strip().lower() == correct_answer.strip().lower()
 
 
 def update_leaderboard(name, score):
-    with open(LEADERBOARD_FILE, "a") as file:
+    with open(LEADERBOARD_FILE, "a", encoding="utf-8") as file:
         file.write(f"{name},{score}\n")
 
 
@@ -133,10 +136,17 @@ def show_leaderboard():
     scores = []
 
     try:
-        with open(LEADERBOARD_FILE, "r") as file:
+        with open(LEADERBOARD_FILE, "r", encoding="utf-8") as file:
             for line in file:
-                name, score = line.strip().split(",")
-                scores.append((name, int(score)))
+                parts = line.strip().split(",")
+                if len(parts) != 2:
+                    continue
+
+                name, score = parts
+                try:
+                    scores.append((name, int(score)))
+                except ValueError:
+                    continue
 
     except FileNotFoundError:
         print("No leaderboard data yet.")
@@ -144,17 +154,21 @@ def show_leaderboard():
 
     scores.sort(key=lambda x: x[1], reverse=True)
 
-    for i, (name, score) in enumerate(scores[:5], start=1):
+    if not scores:
+        print("No leaderboard data yet.")
+        return
+
+    for i, (name, score) in enumerate(scores[:10], start=1):
         print(f"{i}. {name} - {score}")
 
 
 def save_history(name, difficulty, score):
-    with open(HISTORY_FILE, "a") as file:
+    with open(HISTORY_FILE, "a", encoding="utf-8") as file:
         file.write(f"{name},{difficulty},{score}\n")
 
 
 def play_again():
-    answer = input("\nPlay again? (yes/no): ").lower()
+    answer = input("\nPlay again? (yes/no): ").strip().lower()
     return answer == "yes"
 
 
