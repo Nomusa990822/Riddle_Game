@@ -1,7 +1,21 @@
-# 🧩 Riddle Quiz Game
-Terminal + Web App (Streamlit)
+<h1 align="center">🧩 Riddle Quiz Game</h1>
 
-**Live Demo:** ```https://nomusa-riddle-game.streamlit.app/```
+<p align="center">
+Terminal + Web App (Streamlit)
+</p>
+
+<p align="center">
+  <a href="https://nomusa-riddle-game.streamlit.app/">
+    <img src="https://img.shields.io/badge/Play%20Now-Live%20App-success?logo=streamlit">
+  </a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10-blue?logo=python">
+  <img src="https://img.shields.io/badge/Streamlit-App-red?logo=streamlit">
+  <img src="https://img.shields.io/badge/Status-Live-brightgreen">
+  <img src="https://img.shields.io/badge/License-MIT-yellow">
+</p>
 
 ---
 ## Overview
