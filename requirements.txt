@@ -1,2 +1,5 @@
-pytest
+streamlit
+streamlit-autorefresh
+pandas
 colorama
+pytest
