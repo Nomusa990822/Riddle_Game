@@ -1,1 +1,3 @@
 
+Alex,hard,4
+Zee,easy,3
