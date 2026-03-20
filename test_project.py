@@ -1,21 +1,21 @@
 from project import check_answer
 
 
-def test_check_answer_correct():
-    assert check_answer("piano", "piano") == True
+def test_check_answer_exact_match():
+    assert check_answer("piano", "piano") is True
 
 
 def test_check_answer_case_insensitive():
-    assert check_answer("Piano".lower(), "piano") == True
+    assert check_answer("PiaNo", "piano") is True
+
+
+def test_check_answer_strips_spaces():
+    assert check_answer("  piano  ", "piano") is True
 
 
 def test_check_answer_wrong():
-    assert check_answer("door", "piano") == False
+    assert check_answer("keyboard", "piano") is False
 
 
-def test_check_answer_extra_spaces():
-    assert check_answer("piano".strip(), "piano") == True
-
-
-def test_check_answer_completely_different():
-    assert check_answer("car", "piano") == False
+def test_check_answer_empty():
+    assert check_answer("", "piano") is False
