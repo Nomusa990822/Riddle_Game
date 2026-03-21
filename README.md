@@ -1,7 +1,7 @@
 <h1 align="center">🧩 Riddle Quiz Game</h1>
 
 <p align="center">
-🚀 Terminal Version + Deployed Web Application (Streamlit)
+🚀 Terminal + Web App built with Python & Streamlit
 </p>
 
 <p align="center">
@@ -12,38 +12,84 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.10-blue?logo=python">
-  <img src="https://img.shields.io/badge/Streamlit-App-red?logo=streamlit">
+  <img src="https://img.shields.io/badge/Streamlit-Web%20App-red?logo=streamlit">
   <img src="https://img.shields.io/badge/Status-Live-brightgreen">
   <img src="https://img.shields.io/badge/License-MIT-yellow">
 </p>
 
 ---
-## Overview
 
-An interactive Python-based riddle game available in two formats:
-- Terminal Version – classic command-line gameplay
-- Web App Version – built using Streamlit
-The game challenges players with randomized riddles, timed responses, and a competitive leaderboard system.
+## 🌐 Live Demo
 
-This project demonstrates both **command-line application development** and **interactive web app deployment**.
+👉 https://nomusa-riddle-game.streamlit.app/
+
+---
+
+## 📌 Overview
+
+The **Riddle Quiz Game** is an interactive Python application designed to challenge users with randomized riddles under time pressure.
+
+This project exists in two versions:
+
+- **Terminal Version** – a command-line game built using core Python  
+- **Web Application** – an interactive interface built with Streamlit  
+
+It demonstrates the transition from basic scripting to building and deploying a real-world application.
 
 ---
 
 ## 🎮 Features
 
-- 200+ riddles across 3 difficulty levels
-- Easy, Medium, Hard modes
-- Randomized questions every round
-- 30-second timer per question
-- 10 riddles per game session
-- Leaderboard system
-- Player statistics dashboard (web app)
-- Persistent game history
-- Play-again functionality
-- Colored terminal interface (Colorama)
-- Fully deployed web app
+- 200+ riddles across multiple difficulty levels
+- Difficulty selection: Easy, Medium, Hard  
+- 30-second timer per question  
+- 10 riddles per round  
+- Randomized questions every game  
+- Global leaderboard system  
+- Player performance tracking  
+- Play-again functionality  
+- Styled UI with real-time feedback  
 
 ---
+
+## 🧮 Scoring System
+
+| Difficulty | Points per Correct Answer |
+|----------|-------------------------|
+| Easy     | 2 points                |
+| Medium   | 3 points                |
+| Hard     | 5 points                |
+
+---
+
+## 🖥️ App Preview
+
+### Terminal Version
+Below is an example of how the game appears when running in the terminal.
+```
+
+██████╗ ██╗██████╗ ██████╗ ██╗     ███████╗
+██╔══██╗██║██╔══██╗██╔══██╗██║     ██╔════╝
+██████╔╝██║██║  ██║██║  ██║██║     █████╗
+██╔══██╗██║██║  ██║██║  ██║██║     ██╔══╝
+██║  ██║██║██████╔╝██████╔╝███████╗███████╗
+╚═╝  ╚═╝╚═╝╚═════╝ ╚═════╝ ╚══════╝╚══════╝
+        RIDDLE QUIZ GAME
+
+Loading game...
+
+Enter your name:
+
+Choose difficulty (easy / medium / hard):
+
+```
+
+### Web App
+
+![Web App](https://raw.githubusercontent.com/Nomusa990822/Riddle_Game/main/WebAppPic.jpg)
+
+---
+
 ## 🧩 Game Flow
 ```
 Start Game
@@ -64,15 +110,16 @@ Play Again or Exit
 
 ## 📂 Project Structure
 ```
-riddle-quiz-game
+Riddle_Game
 │
-├── project.py          # Main game logic
-├── riddles.txt         # Database of riddles
-├── leaderboard.txt     # Stores player scores
-├── history.txt         # Stores previous game results
-├── requirements.txt    # Project dependencies
-├── test_project.py     # Automated tests
-└── README.md           # Project documentation
+├── app.py              # Streamlit web application
+├── project.py          # Terminal version
+├── riddles.txt         # Riddle dataset (200+ riddles)
+├── leaderboard.txt     # Stores scores
+├── history.txt         # Stores gameplay history
+├── requirements.txt    # Dependencies
+├── test_project.py     # Unit tests
+└── README.md
 ```
 ---
 
@@ -94,7 +141,6 @@ python project.py
 ```
 2. **Streamlit Web App**
 ```
-pip3 install streamlit
 python3 -m streamlit run app.py
 ```
 
@@ -111,81 +157,16 @@ python3 -m streamlit run app.py
 5. Your score will be saved to the **leaderboard**.
 
 ---
-## 🖥️ App Preview
 
-### Terminal Version
-Below is an example of how the game appears when running in the terminal.
-```
-
-██████╗ ██╗██████╗ ██████╗ ██╗     ███████╗
-██╔══██╗██║██╔══██╗██╔══██╗██║     ██╔════╝
-██████╔╝██║██║  ██║██║  ██║██║     █████╗
-██╔══██╗██║██║  ██║██║  ██║██║     ██╔══╝
-██║  ██║██║██████╔╝██████╔╝███████╗███████╗
-╚═╝  ╚═╝╚═╝╚═════╝ ╚═════╝ ╚══════╝╚══════╝
-        RIDDLE QUIZ GAME
-
-Loading game...
-
-Enter your name: X
-
-Choose difficulty (easy / medium / hard): medium
-
-Riddle: What can travel around the world while staying in one corner?
-
-Your answer: stamp
-
-✅ Correct!
-```
-
-**Example incorrect answer:**
-```
-Riddle: What has keys but can't open locks?
-
-Your answer: keyboard
-
-❌ Wrong!
-Answer: piano
-```
-**Example timeout:**
-```
-Riddle: What gets wetter the more it dries?
-
-Your answer: (after 30 seconds)
-
-⏱ Time's up!
-Answer: towel
-```
-**After 10 riddles, the final score is displayed.**
-
-🏆 Final Score: 3/10
-
-_The score is then automatically saved to the leaderboard_
-
-### Streamlit Web App
-
-**Home Screen**
-![Home](https://raw.githubusercontent.com/Nomusa990822/Riddle_Game/main/web1.PNG)
-
-**Gameplay**
-![Gameplay](https://raw.githubusercontent.com/Nomusa990822/Riddle_Game/main/web2.PNG)
-
----
-
-## 📊 Data Storage
-
-|**File** |**Purpose|
-|---------|---------|
-|```riddles.txt```|Stores all riddles|
-|```leaderboard.txt```|Stores player scores|
-|```history.txt```|Stores game sessions|
----
-
-## 🧪 Running Tests
+## 🧪 Testing
 
 To run the automated tests: ```pytest test_project.py```
 
-The tests verify important functions such as answer validation, input handling and core logic.
+Tests cover: 
+- Answer validation
+- Case-insensitive input handling
+- Whitespace handling
+- Difficulty-based scoring
 
 ---
 
@@ -198,26 +179,61 @@ The tests verify important functions such as answer validation, input handling a
 - File handling (persistent leaderboard and history)
 - Pytest (unit testing)
 - Git & GitHub
+- Streamlit
 
 ---
 
 ## 🚀 Future Improvements
 
-Potential enhancements to make the Riddle Game even more engaging and professional:
-1. Persistent online leaderboard (database intergration)
-2. Expanded Riddle Database/AI-generated riddles
-3. Difficulty-Based Scoring
-4. Timed Challenge Mode
-   Add a mode where players solve as many riddles as possible within a fixed total time.
-5. Hint System
-   Allow players to request hints that partially reveal answers at the cost of points.
-7. Advanced UI/UX enhancements
+The current version of the Riddle Quiz Game provides a strong foundation, and several enhancements can be implemented to evolve it into a more robust and scalable application:
+
+### 🌍 Backend & Data
+- Integrate a database (SQLite, Firebase, or PostgreSQL) for persistent and reliable leaderboard storage  
+- Enable real-time leaderboard updates across multiple users  
+- Store user profiles and long-term performance tracking  
+
+### 🎮 Gameplay Enhancements
+- Add difficulty-based timer adjustments  
+- Introduce bonus points for faster answers  
+- Implement streak-based scoring or achievements system  
+- Add hints system for challenging riddles  
+
+### 🎨 User Experience (UI/UX)
+- Improve mobile responsiveness and layout  
+- Add animations and transitions for better interactivity  
+- Introduce dark/light mode toggle  
+- Add sound effects for correct/incorrect answers  
+
+### 🤖 Advanced Features
+- Integrate AI to generate new riddles dynamically  
+- Add multiplayer or competitive mode  
+- Implement user authentication (login/signup system)  
+- Add categories (logic, math, wordplay, etc.)  
+
+### 📈 Performance & Deployment
+- Optimize app performance for faster loading  
+- Improve error handling and logging  
+- Deploy using a scalable cloud backend
+
+---
+
+## ⚠️ Limitations
+
+- The application supports multiple users accessing the game simultaneously, as it is deployed online.
+
+- However, the current implementation uses local file storage (`leaderboard.txt` and `history.txt`), which means:
+  - Data is not guaranteed to be consistent across multiple users
+  - Simultaneous writes may cause minor inconsistencies
+  - Data may reset if the app restarts
+
+- For a production-level system, a database (e.g., SQLite, Firebase, or PostgreSQL) would be used to ensure reliable, real-time data storage and scalability.
 
 ---
 
 ## 👤 Author
 
-Nomusa  
+Nomusa Shongwe
+
 GitHub: ```https://github.com/Nomusa990822```
 
 ---
