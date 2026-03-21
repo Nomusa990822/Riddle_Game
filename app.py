@@ -68,7 +68,7 @@ def show_leaderboard():
 
     if scores:
         df = pd.DataFrame(scores[:10], columns=["Player", "Score"])
-        st.table(df)
+        st.dataframe(df, use_container_width=True, hide_index=True)
     else:
         st.info("No leaderboard data yet.")
 
@@ -99,10 +99,21 @@ def show_player_stats(player_name):
         return
 
     df = pd.DataFrame(rows, columns=["Difficulty", "Score"])
-    st.write("Total Games:", len(df))
-    st.write("Average Score:", round(df["Score"].mean(), 2))
-    st.write("Best Score:", int(df["Score"].max()))
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Total Games", len(df))
+    col2.metric("Average Score", round(df["Score"].mean(), 2))
+    col3.metric("Best Score", int(df["Score"].max()))
+
     st.bar_chart(df["Score"])
+
+
+def get_points(difficulty):
+    if difficulty == "easy":
+        return 2
+    if difficulty == "medium":
+        return 3
+    return 5
 
 
 def reset_game():
@@ -110,16 +121,80 @@ def reset_game():
     st.session_state.score = 0
     st.session_state.question_number = 0
     st.session_state.questions = []
-    st.session_state.current_answer = ""
     st.session_state.question_start_time = None
     st.session_state.round_saved = False
+    st.session_state.answer_submitted = False
+    st.session_state.feedback = ""
+    st.session_state.feedback_type = ""
+    st.session_state.correct_answer = ""
+    st.session_state.user_answer = ""
 
 
-st.set_page_config(page_title="Riddle Quiz Game", page_icon="🧩", layout="centered")
+st.set_page_config(
+    page_title="Riddle Quiz Game",
+    page_icon="🧩",
+    layout="centered"
+)
 
-st.title("🧩 Riddle Quiz Game")
-st.write("Play in your browser with 10 riddles per round and 30 seconds per question.")
+# ---------------------------
+# STYLING
+# ---------------------------
+st.markdown(
+    """
+    <style>
+    .score-card {
+        border: 1px solid #444;
+        border-radius: 16px;
+        padding: 18px;
+        background: linear-gradient(135deg, #1f2937, #111827);
+        margin-bottom: 16px;
+        text-align: center;
+    }
+    .score-title {
+        font-size: 15px;
+        color: #9ca3af;
+        margin-bottom: 6px;
+    }
+    .score-value {
+        font-size: 34px;
+        font-weight: bold;
+        color: #fbbf24;
+    }
+    .review-card {
+        border: 1px solid #444;
+        border-radius: 14px;
+        padding: 16px;
+        margin-top: 10px;
+        background-color: #161b22;
+    }
+    .review-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 12px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
+# ---------------------------
+# SIDEBAR
+# ---------------------------
+with st.sidebar:
+    st.header("🧩 Game Info")
+    st.write("**Riddles per round:** 10")
+    st.write("**Time per question:** 30 seconds")
+    st.write("**Scoring system:**")
+    st.write("- Easy = 2 points")
+    st.write("- Medium = 3 points")
+    st.write("- Hard = 5 points")
+    st.markdown("---")
+    st.write("Built by **Nomusa**")
+    st.write("Powered by **Streamlit** 🚀")
+
+# ---------------------------
+# SESSION STATE
+# ---------------------------
 if "game_started" not in st.session_state:
     st.session_state.game_started = False
 if "score" not in st.session_state:
@@ -128,16 +203,34 @@ if "question_number" not in st.session_state:
     st.session_state.question_number = 0
 if "questions" not in st.session_state:
     st.session_state.questions = []
-if "current_answer" not in st.session_state:
-    st.session_state.current_answer = ""
 if "question_start_time" not in st.session_state:
     st.session_state.question_start_time = None
 if "round_saved" not in st.session_state:
     st.session_state.round_saved = False
+if "answer_submitted" not in st.session_state:
+    st.session_state.answer_submitted = False
+if "feedback" not in st.session_state:
+    st.session_state.feedback = ""
+if "feedback_type" not in st.session_state:
+    st.session_state.feedback_type = ""
+if "correct_answer" not in st.session_state:
+    st.session_state.correct_answer = ""
+if "user_answer" not in st.session_state:
+    st.session_state.user_answer = ""
+
+# ---------------------------
+# HEADER
+# ---------------------------
+st.title("🧩 Riddle Quiz Game")
+st.write("Test your brain with randomized riddles, timed challenges, and competitive scoring.")
 
 name = st.text_input("Enter your name", value="")
 difficulty = st.selectbox("Choose difficulty", ["easy", "medium", "hard"])
+points_per_correct = get_points(difficulty)
 
+# ---------------------------
+# TOP CONTROLS
+# ---------------------------
 col1, col2 = st.columns(2)
 
 with col1:
@@ -156,6 +249,11 @@ with col1:
                 st.session_state.game_started = True
                 st.session_state.round_saved = False
                 st.session_state.question_start_time = time.time()
+                st.session_state.answer_submitted = False
+                st.session_state.feedback = ""
+                st.session_state.feedback_type = ""
+                st.session_state.correct_answer = ""
+                st.session_state.user_answer = ""
                 st.rerun()
 
 with col2:
@@ -163,15 +261,32 @@ with col2:
         reset_game()
         st.rerun()
 
+# ---------------------------
+# MAIN GAME
+# ---------------------------
 if st.session_state.game_started:
-    st_autorefresh(interval=1000, key="riddle_timer")
-
     question_index = st.session_state.question_number
     progress = question_index / QUESTIONS_PER_ROUND
+
     st.progress(progress)
+
+    st.markdown(
+        f"""
+        <div class="score-card">
+            <div class="score-title">Current Score</div>
+            <div class="score-value">{st.session_state.score} pts</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.caption(f"{difficulty.title()} mode • {points_per_correct} points per correct answer")
 
     if question_index < QUESTIONS_PER_ROUND:
         riddle, answer = st.session_state.questions[question_index]
+
+        if not st.session_state.answer_submitted:
+            st_autorefresh(interval=1000, key="riddle_timer")
 
         if st.session_state.question_start_time is None:
             st.session_state.question_start_time = time.time()
@@ -181,35 +296,65 @@ if st.session_state.game_started:
 
         st.subheader(f"Riddle {question_index + 1} of {QUESTIONS_PER_ROUND}")
         st.write(riddle)
-        st.info(f"⏳ Time remaining: {remaining} seconds")
 
-        if remaining == 0:
-            st.error(f"⏱ Time's up! Correct answer: {answer}")
+        if st.session_state.answer_submitted:
+            if st.session_state.feedback_type == "success":
+                st.success(st.session_state.feedback)
+            elif st.session_state.feedback_type == "error":
+                st.error(st.session_state.feedback)
 
-            if st.button("Next Question", key=f"next_timeout_{question_index}"):
-                st.session_state.question_number += 1
-                st.session_state.question_start_time = time.time()
-                st.rerun()
-        else:
-            user_answer = st.text_input(
-                "Your answer",
-                key=f"answer_input_{question_index}"
+            st.markdown(
+                f"""
+                <div class="review-card">
+                    <div class="review-title">📝 Answer Review</div>
+                    <p><b>Your answer:</b> {st.session_state.user_answer}</p>
+                    <p><b>Correct answer:</b> {st.session_state.correct_answer}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
             )
 
-            if st.button("Submit Answer", key=f"submit_{question_index}"):
-                if user_answer.strip().lower() == answer.lower():
-                    st.success("✅ Correct!")
-                    st.session_state.score += 1
-                else:
-                    st.error(f"❌ Wrong! Correct answer: {answer}")
-
+            if st.button("Next Question", key=f"next_{question_index}", use_container_width=True):
                 st.session_state.question_number += 1
                 st.session_state.question_start_time = time.time()
+                st.session_state.answer_submitted = False
+                st.session_state.feedback = ""
+                st.session_state.feedback_type = ""
+                st.session_state.correct_answer = ""
+                st.session_state.user_answer = ""
                 st.rerun()
 
-        st.write(f"Current Score: {st.session_state.score}")
+        else:
+            st.info(f"⏳ Time remaining: {remaining} seconds")
+
+            user_answer = st.text_input("Your answer", key=f"answer_input_{question_index}")
+
+            if remaining == 0:
+                st.session_state.answer_submitted = True
+                st.session_state.feedback = "⏱ Time's up!"
+                st.session_state.feedback_type = "error"
+                st.session_state.correct_answer = answer
+                st.session_state.user_answer = "No answer submitted"
+                st.rerun()
+
+            if st.button("Submit Answer", key=f"submit_{question_index}", use_container_width=True):
+                cleaned_user_answer = user_answer.strip()
+                st.session_state.user_answer = cleaned_user_answer if cleaned_user_answer else "No answer submitted"
+
+                if cleaned_user_answer.lower() == answer.lower():
+                    st.session_state.score += points_per_correct
+                    st.session_state.feedback = f"✅ Correct! +{points_per_correct} points"
+                    st.session_state.feedback_type = "success"
+                else:
+                    st.session_state.feedback = "❌ Wrong!"
+                    st.session_state.feedback_type = "error"
+
+                st.session_state.correct_answer = answer
+                st.session_state.answer_submitted = True
+                st.rerun()
+
     else:
-        st.success(f"🏆 Final Score: {st.session_state.score}/{QUESTIONS_PER_ROUND}")
+        st.success(f"🏆 Final Score: {st.session_state.score} points")
 
         if not st.session_state.round_saved:
             save_score(name.strip(), st.session_state.score)
@@ -219,36 +364,23 @@ if st.session_state.game_started:
         show_leaderboard()
         show_player_stats(name.strip())
 
-        if st.button("Play Again"):
+        if st.button("Play Again", use_container_width=True):
             reset_game()
             st.rerun()
+
 else:
     show_leaderboard()
 
 # ---------------------------
 # FOOTER
 # ---------------------------
-
 st.markdown("---")
-
 st.markdown(
     """
-    <style>
-    .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: #0e1117;
-        color: gray;
-        text-align: center;
-        padding: 10px;
-        font-size: 13px;
-    }
-    </style>
-
-    <div class="footer">
-        🧩 Riddle Quiz Game | Built by Nomusa | 2026 🚀
+    <div style='text-align: center; font-size: 14px; color: gray;'>
+        🧩 <b>Riddle Qiuz Game</b><br>
+        Built by <b>Nomusa</b> | 2026<br>
+        Powered by Streamlit 🚀
     </div>
     """,
     unsafe_allow_html=True
