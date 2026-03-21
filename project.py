@@ -1,6 +1,6 @@
 import random
 import time
-from colorama import Fore, Style, init
+from colorama import Fore, init
 
 init(autoreset=True)
 
@@ -29,9 +29,9 @@ def main():
             return
 
         questions = random.sample(riddles, QUESTIONS_PER_ROUND)
-        score = play_game(questions)
+        score = play_game(questions, difficulty)
 
-        print(Fore.YELLOW + f"\n🏆 Final Score: {score}/{QUESTIONS_PER_ROUND}")
+        print(Fore.YELLOW + f"\n🏆 Final Score: {score} points")
 
         update_leaderboard(name, score)
         save_history(name, difficulty, score)
@@ -74,6 +74,14 @@ def choose_difficulty():
         print(Fore.RED + "Invalid difficulty. Please choose easy, medium, or hard.")
 
 
+def get_points(difficulty):
+    if difficulty == "easy":
+        return 2
+    if difficulty == "medium":
+        return 3
+    return 5
+
+
 def load_riddles(level):
     riddles = []
 
@@ -95,8 +103,14 @@ def load_riddles(level):
     return riddles
 
 
-def play_game(questions):
+def play_game(questions, difficulty):
     score = 0
+    points_per_correct = get_points(difficulty)
+
+    print(
+        Fore.MAGENTA
+        + f"\nScoring for {difficulty.title()} mode: {points_per_correct} points per correct answer"
+    )
 
     for index, (riddle, answer) in enumerate(questions, start=1):
         print(Fore.BLUE + f"\nRiddle {index}/{QUESTIONS_PER_ROUND}: {riddle}")
@@ -108,15 +122,21 @@ def play_game(questions):
 
         if end_time - start_time > TIME_LIMIT:
             print(Fore.RED + "⏱ Time's up!")
-            print("Answer:", answer)
+            print(f"Your answer: No answer submitted")
+            print(f"Correct answer: {answer}")
             continue
 
         if check_answer(user_answer, answer):
-            print(Fore.GREEN + "✅ Correct!")
-            score += 1
+            score += points_per_correct
+            print(Fore.GREEN + f"✅ Correct! +{points_per_correct} points")
+            print(f"Your answer: {user_answer}")
+            print(f"Correct answer: {answer}")
         else:
             print(Fore.RED + "❌ Wrong!")
-            print("Answer:", answer)
+            print(f"Your answer: {user_answer}")
+            print(f"Correct answer: {answer}")
+
+        print(Fore.YELLOW + f"Current Score: {score} points")
 
     return score
 
@@ -159,7 +179,7 @@ def show_leaderboard():
         return
 
     for i, (name, score) in enumerate(scores[:10], start=1):
-        print(f"{i}. {name} - {score}")
+        print(f"{i}. {name} - {score} points")
 
 
 def save_history(name, difficulty, score):
