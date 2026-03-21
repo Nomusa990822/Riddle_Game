@@ -1,3 +1,5 @@
 
 Alex,hard,4
 Zee,easy,3
+Nomusa,hard,15
+Nomusa,medium,15
