@@ -1,7 +1,7 @@
-<h1 align="center">🧩 Riddle Quiz Game</h1>
+<h1 align="center">Riddle Quiz Game</h1>
 
 <p align="center">
-🚀 Terminal + Web App built with Python & Streamlit
+Terminal + Web App built with Python & Streamlit
 </p>
 
 <p align="center">
@@ -19,13 +19,13 @@
 
 ---
 
-## 🌐 Live Demo
+## Live Demo
 
-👉 https://nomusa-riddle-game.streamlit.app/
+```https://nomusa-riddle-game.streamlit.app/```
 
 ---
 
-## 📌 Overview
+## Overview
 
 The **Riddle Quiz Game** is an interactive Python application designed to challenge users with randomized riddles under time pressure.
 
@@ -38,7 +38,7 @@ It demonstrates the transition from basic scripting to building and deploying a 
 
 ---
 
-## 🎮 Features
+## Features
 
 - 200+ riddles across multiple difficulty levels
 - Difficulty selection: Easy, Medium, Hard  
@@ -52,7 +52,7 @@ It demonstrates the transition from basic scripting to building and deploying a 
 
 ---
 
-## 🧮 Scoring System
+## Scoring System
 
 | Difficulty | Points per Correct Answer |
 |----------|-------------------------|
@@ -62,7 +62,7 @@ It demonstrates the transition from basic scripting to building and deploying a 
 
 ---
 
-## 🖥️ App Preview
+## App Preview
 
 ### Terminal Version
 Below is an example of how the game appears when running in the terminal.
@@ -90,7 +90,7 @@ Choose difficulty (easy / medium / hard):
 
 ---
 
-## 🧩 Game Flow
+## Game Flow
 ```
 Start Game
    ↓
@@ -108,7 +108,7 @@ Play Again or Exit
 ```
 ---
 
-## 📂 Project Structure
+## Project Structure
 ```
 Riddle_Game
 │
@@ -123,7 +123,7 @@ Riddle_Game
 ```
 ---
 
-## ⚙️ Installation
+## Installation
 
 ```
 git clone https://github.com/Nomusa990822/Riddle_Game
@@ -133,7 +133,7 @@ pip3 install -r requirements.txt
 
 ---
 
-## ▶️ Running the Game
+## Running the Game
 
 1. **Terminal Version**
 ```
@@ -145,7 +145,7 @@ python3 -m streamlit run app.py
 ```
 
 ---
-## 📝 How to Play
+## How to Play
 
 1. Enter your **name**.
 2. Choose a **difficulty level**:
@@ -158,7 +158,7 @@ python3 -m streamlit run app.py
 
 ---
 
-## 🧪 Testing
+## Testing
 
 To run the automated tests: ```pytest test_project.py```
 
@@ -170,7 +170,7 @@ Tests cover:
 
 ---
 
-## 🔧 Technologies Used
+## Technologies Used
 
 - Python
 - Colorama (for terminal color)
@@ -183,41 +183,41 @@ Tests cover:
 
 ---
 
-## 🚀 Future Improvements
+## Future Improvements
 
 The current version of the Riddle Quiz Game provides a strong foundation, and several enhancements can be implemented to evolve it into a more robust and scalable application:
 
-### 🌍 Backend & Data
+### Backend & Data
 - Integrate a database (SQLite, Firebase, or PostgreSQL) for persistent and reliable leaderboard storage  
 - Enable real-time leaderboard updates across multiple users  
 - Store user profiles and long-term performance tracking  
 
-### 🎮 Gameplay Enhancements
+### Gameplay Enhancements
 - Add difficulty-based timer adjustments  
 - Introduce bonus points for faster answers  
 - Implement streak-based scoring or achievements system  
 - Add hints system for challenging riddles  
 
-### 🎨 User Experience (UI/UX)
+### User Experience (UI/UX)
 - Improve mobile responsiveness and layout  
 - Add animations and transitions for better interactivity  
 - Introduce dark/light mode toggle  
 - Add sound effects for correct/incorrect answers  
 
-### 🤖 Advanced Features
+### Advanced Features
 - Integrate AI to generate new riddles dynamically  
 - Add multiplayer or competitive mode  
 - Implement user authentication (login/signup system)  
 - Add categories (logic, math, wordplay, etc.)  
 
-### 📈 Performance & Deployment
+### Performance & Deployment
 - Optimize app performance for faster loading  
 - Improve error handling and logging  
 - Deploy using a scalable cloud backend
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 - The application supports multiple users accessing the game simultaneously, as it is deployed online.
 
@@ -230,7 +230,7 @@ The current version of the Riddle Quiz Game provides a strong foundation, and se
 
 ---
 
-## 👤 Author
+## Author
 
 Nomusa Shongwe
 
@@ -238,6 +238,6 @@ GitHub: ```https://github.com/Nomusa990822```
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the **MIT License**.
